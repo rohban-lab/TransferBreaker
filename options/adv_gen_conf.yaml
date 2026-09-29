@@ -1,0 +1,23 @@
+seed: 42  # global seed for random number generation across all modules
+lang: ""  # pl, pt, ar, fi, vi
+model_type: ""  # whisper, wav2vec2, mms
+
+model:
+  path: ""  # local checkpoint or Hugging Face repository; see README for paper model IDs
+  cache_dir:
+  n_mels:  # optional; auto-detected from Whisper config (80 for most variants, 128 for large-v3 family)
+
+data:
+  clean_dir: ""
+  clean_split: ""  # train, test, dev
+  out_dir: ""
+  log_dir: ""
+  clean_frac: 1.0
+
+attacker:
+  batch_size: 4
+  attack_type: "untargeted"  # only supported mode; matches the paper threat model
+  steps: 50
+  alpha_ratio: 0.25  # per utterance: alpha_0 = alpha_ratio * epsilon_x(SNR)
+  target_snr: 27
+  adaptive_alpha: True  # halve alpha after 10 consecutive stagnant steps

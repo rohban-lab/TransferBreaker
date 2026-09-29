@@ -1,0 +1,16 @@
+numpy==1.24.3
+jupyter
+datasets==2.19.2
+transformers==4.46.3
+soundfile==0.13.1
+librosa
+evaluate==0.4.6
+jiwer==4.0.0
+accelerate==1.1.0
+tensorboardX
+omegaconf
+prettytable
+pandas>=2.0
+scipy>=1.10
+regex>=2023.0.0
+tqdm>=4.65

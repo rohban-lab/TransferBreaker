@@ -1,0 +1,16 @@
+seed: 42  # global seed for random number generation across all modules
+lang: ""  # pl, pt, ar, fi, vi
+model_type: ""  # whisper, wav2vec2, mms
+
+model:
+  path: ""  # local checkpoint or Hugging Face repository; see README for paper model IDs
+  cache_dir:
+  n_mels:  # optional; auto-detected from Whisper config (80 for most variants, 128 for large-v3 family)
+
+data:
+  eval_dir: ""
+  eval_split: ""  # train, test, dev
+  eval_frac: 1.0
+  log_dir: ""
+
+batch_size: 4  # choose based on your hardware

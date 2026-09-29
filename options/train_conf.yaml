@@ -1,0 +1,66 @@
+seed: 42  # global seed for random number generation across all modules
+float32_matmul_precision: ""  # highest, high, medium
+
+lang: ""  # pl, pt, ar, fi, vi
+model_type: ""  # whisper, wav2vec2, mms
+
+model:
+  path: ""  # local checkpoint or Hugging Face repository; see README for paper model IDs
+  cache_dir:
+  n_mels:  # optional; auto-detected from Whisper config (80 for most variants, 128 for large-v3 family)
+
+data:
+  clean_dir: ""  # used as training data
+  clean_split: ""  # train, test, dev
+  eval_dir: ""  # used as validation/test data during training
+  eval_split: ""  # train, test, dev
+  out_dir: ""  # model checkpoints
+  log_dir: ""  # custom training logs
+  train_frac: 1.0
+  eval_frac: 1.0
+
+trainer:
+  # Attack used during adversarial training.
+  steps: 10
+  alpha_ratio: 0.25  # per utterance: alpha_0 = alpha_ratio * epsilon_x(SNR)
+  targeted_snr: 22
+
+  # Optimization.
+  lr: 1e-5
+  epochs: 4
+  batch_size: 4  # choose batch size / accumulation to fit your hardware
+  grad_accumulation_steps: 1
+  dataloader_num_workers: 12
+  bf16: True
+  gradient_checkpointing: False
+  warmup_ratio: 0.1
+
+  # TransferBreaker objective.
+  # "default": explicitly L_clean + lambda_adv*L_adv + lambda_ljr*L_LJR.
+  # "efficient": sample one clean/base/target/hybrid branch per iteration.
+  objective_mode: "default"
+  lambda_adv: 4.0
+  lambda_ljr: 2.5
+  hybrid_prob: 0.5  # default mode: P(delta = delta_hybrid); otherwise use delta_base
+
+  # Efficient-mode settings. The defaults reproduce the default objective in expectation,
+  # up to an overall constant: 0.2*L_clean + 0.8*L_adv + 0.5*L_LJR.
+  # Common recipes:
+  #   FT:           p_clean=1.0, p_adv_base=0.0, p_adv_target=0.0, p_adv_mix=0.0
+  #   Standard-AFT: p_clean=0.2, p_adv_base=0.0, p_adv_target=0.8, p_adv_mix=0.0
+  #   Base-AFT:     p_clean=0.2, p_adv_base=0.8, p_adv_target=0.0, p_adv_mix=0.0, beta=0.0
+  #   TransferBreaker: use the defaults below.
+  beta: 0.625  # Base/HybridGrad branch loss = L_adv + beta*L_LJR
+  p_clean: 0.2
+  p_adv_base: 0.4
+  p_adv_target: 0.0
+  p_adv_mix: 0.4
+
+  gamma: 0.5  # HybridGrad interpolation factor
+  
+  # 1 = use the current target directly (no snapshot/copy overhead, no lag).
+  # >1 = refresh a frozen target snapshot every N optimizer steps (e.g. 100).
+  adv_mix_target_update: 1
+
+  log_interval: 50
+  checkpoint_save_limit: 4

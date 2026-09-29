@@ -1,0 +1,8 @@
+seed: 42  # global seed for deterministic subsampling
+input_dir: ""  # root of one extracted MLS language release, e.g. mls_polish or mls_portuguese
+output_dir: ""
+train_num_samples:  # leave blank to keep all filtered samples
+dev_num_samples:
+test_num_samples:
+max_duration: 10  # seconds; set null to disable duration filtering
+sample_rate: 16_000
