@@ -2,8 +2,8 @@
 
 Official implementation of **"Breaking Adversarial Transferability in Fine-Tuned Speech Recognition"** (NeurIPS 2026).
 
-**Authors:** Mojtaba Nafez<strong>\*</strong>, Aref Mousavi<strong>\*</strong>, Mohammad Ebrahim Mahdavi, Mobina Poulaei, Kiarash Kiani Feriz, Mohammad Hossein Rohban  
-<strong>\*</strong> Equal contribution.  
+> **Authors:** Mojtaba Nafez<strong>\*</strong>, Aref Mousavi<strong>\*</strong>, Mohammad Ebrahim Mahdavi, Mobina Poulaei, Kiarash Kiani Feriz, Mohammad Hossein Rohban  
+> <strong>\*</strong> Equal contribution.  
 
 **Links:** Paper and BibTeX coming soon.
 
